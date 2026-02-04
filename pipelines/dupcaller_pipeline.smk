@@ -1,15 +1,19 @@
+rule testimport:
+    input:
+        expand(f"{FASTQ_DIRS['unfiltered']}{{sample}}_r1.fq.gz",
+            sample=SAMPLES)
+
 rule all:
     input:
-        # Sample outputs
+        # Test all three conditions
         expand("{pipeline}/vcf/default/{sample}.vcf",
-        sample=SAMPLES, pipeline=PIPELINE),
+            sample=SAMPLES, pipeline=PIPELINE),
         expand("{pipeline}/qc/fastqc/{state}/{sample}_r1_fastqc.html", 
-        sample=SAMPLES, state=STATES, pipeline=PIPELINE),
-        # Matched normal outputs
+            sample=SAMPLES, state=STATES, pipeline=PIPELINE),
         expand("{pipeline}/qc/fastqc/{state}/{mn}_r1_fastqc.html",
-        mn=MATCHED_NORMALS, state=["unfiltered", "mn_filtered"], pipeline=PIPELINE),
+            mn=MATCHED_NORMALS, state=["unfiltered", "mn_filtered"], pipeline=PIPELINE),
         expand("{pipeline}/tmp/2_mn/c_dedup/{mn}.bam",
-        mn=MATCHED_NORMALS, pipeline=PIPELINE)
+            mn=MATCHED_NORMALS, pipeline=PIPELINE)
 
 rule mn:
     input:

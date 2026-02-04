@@ -1,0 +1,82 @@
+# Pipeline selection: choose either 'dupcaller_pipeline' or 'fgbio_pipeline'
+pipeline: dupcaller_pipeline
+
+# Resource allocation
+resources:
+  io: 4  # Number of parallel I/O operations allowed
+
+# Container definitions for pipeline tools
+containers:
+  dupcaller: "docker://iarcbioinfo/dupcaller:v1.0"
+  gatk: "docker://broadinstitute/gatk:4.6.2.0"
+
+# Reference files and masks
+ref: /path/to/reference/genome.fa
+noisemask: /path/to/noise_mask.bed.gz
+snpmask: /path/to/snp_database.vcf.gz
+chr_sizes: /path/to/chromosome_regions.bed
+
+# Import configuration: define data sources and rename samples
+# Structure:
+#   source_name:
+#     path: /path/to/fastq/files/
+#     samples:
+#       original_filename: new_sample_name
+#
+# Notes:
+# - original_filename should match fastq files without _r1.fq.gz/_r2.fq.gz suffix
+# - new_sample_name will be used throughout the pipeline
+# - Useful for adding replicate numbers, batch IDs, or standardizing names
+import_sources:
+  batch_1:
+    path: /path/to/archive/batch_1/fastq/
+    samples:
+      # Treatment samples
+      treatment_24h: wt_treatment_24h_rep1
+      treatment_72h: wt_treatment_72h_rep1
+      control_24h: wt_control_24h_rep1
+      control_72h: wt_control_72h_rep1
+      # Matched normal
+      normal: wt_normal_rep1
+  
+  batch_2:
+    path: /path/to/archive/batch_2/fastq/
+    samples:
+      # Treatment samples with different original names
+      treated_24: wt_treatment_24h_rep2
+      treated_72: wt_treatment_72h_rep2
+      untreated_24: wt_control_24h_rep2
+      untreated_72: wt_control_72h_rep2
+      # Matched normal
+      normal: wt_normal_rep2
+
+# Define tumor-normal pairs using the NEW sample names from import_sources
+# Each sample maps to its matched normal
+samples:
+  # Batch 1 samples
+  wt_treatment_24h_rep1: {normal: "wt_normal_rep1"}
+  wt_treatment_72h_rep1: {normal: "wt_normal_rep1"}
+  wt_control_24h_rep1: {normal: "wt_normal_rep1"}
+  wt_control_72h_rep1: {normal: "wt_normal_rep1"}
+  
+  # Batch 2 samples
+  wt_treatment_24h_rep2: {normal: "wt_normal_rep2"}
+  wt_treatment_72h_rep2: {normal: "wt_normal_rep2"}
+  # wt_control_24h_rep2: {normal: "wt_normal_rep2"}  # example: commented out
+  # wt_control_72h_rep2: {normal: "wt_normal_rep2"}  # example: commented out
+
+# List all matched normal samples (must match normal names used above)
+matched_normals:
+  - wt_normal_rep1
+  - wt_normal_rep2
+
+# Processing states for QC tracking
+states:
+  - unfiltered  # Raw fastq files
+  - filtered    # After trimming/filtering
+
+# Output directory structure for fastq files at different processing stages
+fastq_dirs:
+  unfiltered: ../../data/fastq/              # Location for imported raw files
+  filtered: dupcaller_pipeline/tmp/1_primary/a_trimmed/    # Trimmed tumor samples
+  mn_filtered: dupcaller_pipeline/tmp/2_mn/a_trimmed/      # Trimmed normal samples
