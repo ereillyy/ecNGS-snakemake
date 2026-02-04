@@ -15,7 +15,7 @@ rule mn_remove_dups:
     conda:
         "../../../../../envs/main.yaml"
     log:
-        "{pipeline}/qc/mn_rmdups/{sample}.log"
+        "{pipeline}/logs/mn_rmdups/{sample}.log"
     shell:
         r"""
         echo "[$(date)] Starting remove_dups for {wildcards.sample}" > {log}
@@ -26,7 +26,6 @@ rule mn_remove_dups:
         OPTICAL_DUPLICATE_PIXEL_DISTANCE=2500 \
         REMOVE_DUPLICATES=true \
         DUPLICATE_SCORING_STRATEGY=TOTAL_MAPPED_REFERENCE_LENGTH \
-        MINIMUM_DISTANCE=300 \
         >> {log} 2>&1
         samtools index {output.bam} >> {log} 2>&1
         echo "[$(date)] Finished remove_dups for {wildcards.sample}" >> {log}
