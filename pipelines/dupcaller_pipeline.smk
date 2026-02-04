@@ -1,15 +1,15 @@
 rule all:
     input:
-        # Sample outputs
-        expand("{pipeline}/vcf/default/{sample}.vcf",
-        sample=SAMPLES, pipeline=PIPELINE),
+        # Test all three conditions
+        expand("{pipeline}/vcf/{condition}/{sample}.vcf",
+            sample=SAMPLES, pipeline=PIPELINE,
+            condition=["dist2500", "dist100", "no_optical"]),
         expand("{pipeline}/qc/fastqc/{state}/{sample}_r1_fastqc.html", 
-        sample=SAMPLES, state=STATES, pipeline=PIPELINE),
-        # Matched normal outputs
+            sample=SAMPLES, state=STATES, pipeline=PIPELINE),
         expand("{pipeline}/qc/fastqc/{state}/{mn}_r1_fastqc.html",
-        mn=MATCHED_NORMALS, state=["unfiltered", "mn_filtered"], pipeline=PIPELINE),
+            mn=MATCHED_NORMALS, state=["unfiltered", "mn_filtered"], pipeline=PIPELINE),
         expand("{pipeline}/tmp/2_mn/c_dedup/{mn}.bam",
-        mn=MATCHED_NORMALS, pipeline=PIPELINE)
+            mn=MATCHED_NORMALS, pipeline=PIPELINE)
 
 rule mn:
     input:
