@@ -26,8 +26,8 @@ rule combine_vcfs_dist2500:
 
 rule combine_vcfs_no_optical:
     input:
-        snv="{pipeline}/tmp/1_primary/e_call/no_optical/{sample}_snv.vcf",
-        indel="{pipeline}/tmp/1_primary/e_call/no_optical/{sample}_indel.vcf"
+        snv="{pipeline}/tmp/1_primary/e_call/default/no_optical/{sample}_snv.vcf",
+        indel="{pipeline}/tmp/1_primary/e_call/default/no_optical/{sample}_indel.vcf"
     output:
         "{pipeline}/vcf/default/no_optical/{sample}.vcf"
     threads: 1
@@ -52,8 +52,8 @@ rule combine_vcfs_no_optical:
 
 rule combine_vcfs_dist100:
     input:
-        snv="{pipeline}/tmp/1_primary/e_call/dist100/{sample}_snv.vcf",
-        indel="{pipeline}/tmp/1_primary/e_call/dist100/{sample}_indel.vcf"
+        snv="{pipeline}/tmp/1_primary/e_call/default/dist100/{sample}_snv.vcf",
+        indel="{pipeline}/tmp/1_primary/e_call/default/dist100/{sample}_indel.vcf"
     output:
         "{pipeline}/vcf/default/dist100/{sample}.vcf"
     threads: 1

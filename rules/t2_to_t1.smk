@@ -14,7 +14,11 @@ rule t2_to_t1:
     shell:
         r"""
         echo "[$(date)] [t2_to_t1] Starting for {wildcards.sample}" > {log}
-        echo "[$(date)] [t2_to_t1] Source: {input.r1}" >> {log}
-        rsync -Pah {input.r1} {input.r2} $(dirname {output.r1})/ >> {log} 2>&1
+        echo "[$(date)] [t2_to_t1] Source R1: {input.r1}" >> {log}
+        echo "[$(date)] [t2_to_t1] Output R1: {output.r1}" >> {log}
+        rsync -Pah {input.r1} {output.r1} >> {log} 2>&1
+        echo "[$(date)] [t2_to_t1] Source R2: {input.r2}" >> {log}
+        echo "[$(date)] [t2_to_t1] Output R2: {output.r2}" >> {log}
+        rsync -Pah {input.r2} {output.r2} >> {log} 2>&1
         echo "[$(date)] [t2_to_t1] Finished for {wildcards.sample}" >> {log}
         """

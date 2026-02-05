@@ -1,17 +1,9 @@
 rule all:
     input:
         # Test all three conditions
-        expand("{pipeline}/vcf/default/{condition}{sample}.vcf",
+        expand("{pipeline}/vcf/default/{condition}/{sample}.vcf",
             sample=SAMPLES, pipeline=PIPELINE,
             condition=["dist2500", "dist100", "no_optical"]),
-<<<<<<< HEAD
-        expand("{pipeline}/vcf/{condition}/{sample}.vcf",
-            sample=SAMPLES, pipeline=PIPELINE,
-            condition=["dist2500", "dist100", "no_optical"]),
-=======
-        expand("{pipeline}/vcf/default/{sample}.vcf",
-            sample=SAMPLES, pipeline=PIPELINE),
->>>>>>> 167b62b576263ffd9d397ec2d333afce773a2f7e
         expand("{pipeline}/qc/fastqc/{state}/{sample}_r1_fastqc.html", 
             sample=SAMPLES, state=STATES, pipeline=PIPELINE),
         expand("{pipeline}/qc/fastqc/{state}/{mn}_r1_fastqc.html",
@@ -28,10 +20,9 @@ rule mn:
 
 rule sample:
     input:
-        expand("{pipeline}/vcf/default/{sample}.vcf",
-        sample=SAMPLES, pipeline=PIPELINE),
-        expand("{pipeline}/qc/fastqc/{state}/{sample}_r1_fastqc.html", 
-        sample=SAMPLES, state=STATES, pipeline=PIPELINE),
+        expand("{pipeline}/vcf/default/{condition}/{sample}.vcf",
+            sample=SAMPLES, pipeline=PIPELINE,
+            condition=["dist2500", "dist100", "no_optical"])
 
 # shared rules
 include: "../rules/t2_to_t1.smk"
