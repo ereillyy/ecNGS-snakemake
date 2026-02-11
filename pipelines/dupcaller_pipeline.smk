@@ -11,6 +11,8 @@ TRIM_COMBOS = [
     (7, 12),
     (12, 7),
     (12, 12),
+    (12, 30),
+    (30, 12),
     (30, 30)
 ]
 
@@ -18,10 +20,9 @@ TRIM_COMBOS = [
 rule all:
     input:
         # Test all trim combinations
-        expand("{pipeline}/vcf/{trimF}r{trimR}/{sample}.vcf",
+        expand("{pipeline}/vcf/{trim_combo}/{sample}.vcf",
             sample=SAMPLES, pipeline=PIPELINE,
-            trimF=[tc[0] for tc in TRIM_COMBOS],
-            trimR=[tc[1] for tc in TRIM_COMBOS]),
+            trim_combo=[f"{tc[0]}r{tc[1]}" for tc in TRIM_COMBOS]),
         expand("{pipeline}/qc/fastqc/{state}/{sample}_r1_fastqc.html", 
             sample=SAMPLES, state=STATES, pipeline=PIPELINE),
         expand("{pipeline}/qc/fastqc/{state}/{mn}_r1_fastqc.html",
@@ -38,10 +39,9 @@ rule mn:
 
 rule sample:
     input:
-        expand("{pipeline}/vcf/{trimF}r{trimR}/{sample}.vcf",
+        expand("{pipeline}/vcf/{trim_combo}/{sample}.vcf",
         sample=SAMPLES, pipeline=PIPELINE,
-        trimF=[tc[0] for tc in TRIM_COMBOS],
-        trimR=[tc[1] for tc in TRIM_COMBOS]),
+        trim_combo=[f"{tc[0]}r{tc[1]}" for tc in TRIM_COMBOS]),
 #        expand("{pipeline}/qc/fastqc/{state}/{sample}_r1_fastqc.html", 
 #        sample=SAMPLES, state=STATES, pipeline=PIPELINE),
 
