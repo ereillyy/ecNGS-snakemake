@@ -1,13 +1,27 @@
-rule testimport:
-    input:
-        expand(f"{FASTQ_DIRS['unfiltered']}{{sample}}_r1.fq.gz",
-            sample=SAMPLES)
+# Define all trim combinations to test
+TRIM_COMBOS = [
+    (0, 0),
+    (3, 3),
+    (0, 5),
+    (5, 0),
+    (5, 5),
+    (5, 7),
+    (7, 5),
+    (7, 7),
+    (7, 12),
+    (12, 7),
+    (12, 12),
+    (30, 30)
+]
+
 
 rule all:
     input:
-        # Test all three conditions
-        expand("{pipeline}/vcf/default/{sample}.vcf",
-            sample=SAMPLES, pipeline=PIPELINE),
+        # Test all trim combinations
+        expand("{pipeline}/vcf/{trimF}r{trimR}/{sample}.vcf",
+            sample=SAMPLES, pipeline=PIPELINE,
+            trimF=[tc[0] for tc in TRIM_COMBOS],
+            trimR=[tc[1] for tc in TRIM_COMBOS]),
         expand("{pipeline}/qc/fastqc/{state}/{sample}_r1_fastqc.html", 
             sample=SAMPLES, state=STATES, pipeline=PIPELINE),
         expand("{pipeline}/qc/fastqc/{state}/{mn}_r1_fastqc.html",
@@ -24,10 +38,12 @@ rule mn:
 
 rule sample:
     input:
-        expand("{pipeline}/vcf/default/{sample}.vcf",
-        sample=SAMPLES, pipeline=PIPELINE),
-        expand("{pipeline}/qc/fastqc/{state}/{sample}_r1_fastqc.html", 
-        sample=SAMPLES, state=STATES, pipeline=PIPELINE),
+        expand("{pipeline}/vcf/{trimF}r{trimR}/{sample}.vcf",
+        sample=SAMPLES, pipeline=PIPELINE,
+        trimF=[tc[0] for tc in TRIM_COMBOS],
+        trimR=[tc[1] for tc in TRIM_COMBOS]),
+#        expand("{pipeline}/qc/fastqc/{state}/{sample}_r1_fastqc.html", 
+#        sample=SAMPLES, state=STATES, pipeline=PIPELINE),
 
 # shared rules
 include: "../rules/t2_to_t1.smk"
