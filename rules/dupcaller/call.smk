@@ -11,9 +11,9 @@ rule call:
     output:
         snv_vcf="{pipeline}/tmp/1_primary/e_call/default/{sample}_snv.vcf",
         indel_vcf="{pipeline}/tmp/1_primary/e_call/default/{sample}_indel.vcf",
-    threads: 16
+    threads: 8
     resources:
-        mem_mb=100 * 1024,
+        mem_mb=70 * 1024,
         time="24:00:00"
     conda:
         "../../../../../envs/main.yaml"

@@ -42,6 +42,7 @@ rule mark_dups_index:
         time="02:00:00"
     conda:
         "../../../../../envs/main.yaml"
+    localrule: True
     log:
         "{pipeline}/logs/mark_dups_index/{sample}.log"
     shell:
