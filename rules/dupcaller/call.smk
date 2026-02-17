@@ -31,7 +31,7 @@ rule call_dist2500:
                 --threads {threads} \
                 --noise {input.noise} \
                 --germline {input.snp} \
-                --output {wildcards.pipeline}/tmp/1_primary/e_call/dist2500/{wildcards.sample} \
+                --output {wildcards.pipeline}/tmp/1_primary/e_call/default/{wildcards.sample} \
         >> {log} 2>&1
         echo "[$(date)] Finished call_dist2500 for {wildcards.sample}" >> {log}
         """
@@ -68,7 +68,7 @@ rule call_no_optical:
                 --threads {threads} \
                 --noise {input.noise} \
                 --germline {input.snp} \
-                --output {wildcards.pipeline}/tmp/1_primary/e_call/no_optical/{wildcards.sample} \
+                --output {wildcards.pipeline}/tmp/1_primary/e_call/default/no_optical/{wildcards.sample} \
         >> {log} 2>&1
         echo "[$(date)] Finished call_no_optical for {wildcards.sample}" >> {log}
         """
@@ -105,7 +105,7 @@ rule call_distance_100:
                 --threads {threads} \
                 --noise {input.noise} \
                 --germline {input.snp} \
-                --output {wildcards.pipeline}/tmp/1_primary/e_call/dist100/{wildcards.sample} \
+                --output {wildcards.pipeline}/tmp/1_primary/e_call/default/dist100/{wildcards.sample} \
         >> {log} 2>&1
         echo "[$(date)] Finished call_dist100 for {wildcards.sample}" >> {log}
         """

@@ -18,8 +18,8 @@ rule combine_vcfs_dist2500:
         echo "[$(date)] Starting combine_vcfs_dist2500 for {wildcards.sample}" > {log}
         python ../../src/combine_dupcaller_vcfs.py \
             --sample {wildcards.sample} \
-            --indir {wildcards.pipeline}/tmp/1_primary/e_call/dist2500 \
-            --outdir {wildcards.pipeline}/vcf/dist2500 \
+            --indir {wildcards.pipeline}/tmp/1_primary/e_call/default/dist2500 \
+            --outdir {wildcards.pipeline}/vcf/default/dist2500 \
         >> {log} 2>&1
         echo "[$(date)] Finished combine_vcfs_dist2500 for {wildcards.sample}" >> {log}
         """
@@ -44,8 +44,8 @@ rule combine_vcfs_no_optical:
         echo "[$(date)] Starting combine_vcfs_no_optical for {wildcards.sample}" > {log}
         python ../../src/combine_dupcaller_vcfs.py \
             --sample {wildcards.sample} \
-            --indir {wildcards.pipeline}/tmp/1_primary/e_call/no_optical \
-            --outdir {wildcards.pipeline}/vcf/no_optical \
+            --indir {wildcards.pipeline}/tmp/1_primary/e_call/default/no_optical \
+            --outdir {wildcards.pipeline}/vcf/default/no_optical \
         >> {log} 2>&1
         echo "[$(date)] Finished combine_vcfs_no_optical for {wildcards.sample}" >> {log}
         """
@@ -70,8 +70,8 @@ rule combine_vcfs_dist100:
         echo "[$(date)] Starting combine_vcfs_dist100 for {wildcards.sample}" > {log}
         python ../../src/combine_dupcaller_vcfs.py \
             --sample {wildcards.sample} \
-            --indir {wildcards.pipeline}/tmp/1_primary/e_call/dist100 \
-            --outdir {wildcards.pipeline}/vcf/dist100 \
+            --indir {wildcards.pipeline}/tmp/1_primary/e_call/default/dist100 \
+            --outdir {wildcards.pipeline}/vcf/default/dist100 \
         >> {log} 2>&1
         echo "[$(date)] Finished combine_vcfs_dist100 for {wildcards.sample}" >> {log}
         """
