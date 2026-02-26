@@ -3,14 +3,14 @@ rule call:
     input:
         sample_bam="{pipeline}/tmp/1_primary/d_markdup/{sample}_mkdp.bam",
         sample_bam_bai="{pipeline}/tmp/1_primary/d_markdup/{sample}_mkdp.bam.bai",
-        normal_bam=lambda wc: f"{wc.pipeline}/tmp/2_mn/c_dedup/{get_normal(wc)}.bam",
-        normal_bam_bai=lambda wc: f"{wc.pipeline}/tmp/2_mn/c_dedup/{get_normal(wc)}.bam.bai",
+        normal_bam=lambda wc: f"{wc.pipeline}/tmp/2_mn/c_dedup/{wc.normal}.bam",
+        normal_bam_bai=lambda wc: f"{wc.pipeline}/tmp/2_mn/c_dedup/{wc.normal}.bam.bai",
         ref_genome=config["ref"],
         noise=config["noisemask"],
         snp=config["snpmask"]
     output:
-        snv_vcf="{pipeline}/tmp/1_primary/e_call/default/{sample}_snv.vcf",
-        indel_vcf="{pipeline}/tmp/1_primary/e_call/default/{sample}_indel.vcf",
+        snv_vcf="{pipeline}/tmp/1_primary/e_call/{normal}/{sample}_snv.vcf",
+        indel_vcf="{pipeline}/tmp/1_primary/e_call/{normal}/{sample}_indel.vcf",
     threads: 8
     resources:
         mem_mb=70 * 1024,
@@ -18,10 +18,10 @@ rule call:
     conda:
         "../../../../../envs/main.yaml"
     log:
-        "{pipeline}/logs/call/{sample}.log"
+        "{pipeline}/logs/call/{normal}/{sample}.log"
     shell:
         r"""
-        echo "[$(date)] Starting call for {wildcards.sample}" > {log}
+        echo "[$(date)] Starting call for {wildcards.sample} vs {wildcards.normal}" > {log}
         python ~/DupCaller/src/DupCaller.py call \
                 --bam {input.sample_bam} \
                 --normalBam {input.normal_bam} \
@@ -29,7 +29,7 @@ rule call:
                 --threads {threads} \
                 --noise {input.noise} \
                 --germline {input.snp} \
-                --output {wildcards.pipeline}/tmp/1_primary/e_call/default/{wildcards.sample} \
+                --output {wildcards.pipeline}/tmp/1_primary/e_call/{wildcards.normal}/{wildcards.sample} \
         >> {log} 2>&1
-        echo "[$(date)] Finished call for {wildcards.sample}" >> {log}
+        echo "[$(date)] Finished call for {wildcards.sample} vs {wildcards.normal}" >> {log}
         """

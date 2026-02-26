@@ -13,15 +13,14 @@ for source_name, source_info in config["import_sources"].items():
         SAMPLE_SOURCES[new_name] = (source_path, original_name)
         ALL_SAMPLES.append(new_name)
 
-# Get samples and matched normals from config
-SAMPLES = list(config["samples"].keys())
-MATCHED_NORMALS = config["matched_normals"]
+SAMPLE_NORMAL_PAIRS = config["sample_normal_pairs"]
+SAMPLES = sorted(set([pair["sample"] for pair in SAMPLE_NORMAL_PAIRS]))
+MATCHED_NORMALS = sorted(set([pair["normal"] for pair in SAMPLE_NORMAL_PAIRS]))
 
-def get_normal(wildcards):
-    return config["samples"][wildcards.sample]["normal"]
+def get_sample_normal_pairs():
+    return [(pair["sample"], pair["normal"]) for pair in SAMPLE_NORMAL_PAIRS]
 
 def get_sample_source(wildcards):
-    """Returns (path, original_name) for a given sample"""
     sample = wildcards.sample if hasattr(wildcards, 'sample') else wildcards.mn
     return SAMPLE_SOURCES[sample]
 
