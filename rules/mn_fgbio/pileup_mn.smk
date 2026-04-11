@@ -11,7 +11,7 @@ rule pileup_mn:
     threads: 4
     resources:
         mem_mb=50 * 1024,
-        time="1-00:00:00"
+        runtime=24 * 60
     conda:
         "../../../../../envs/main.yaml"
     log:

@@ -6,7 +6,7 @@ rule filter_mutationsonly:
     threads: 1
     resources:
         mem_mb=50 * 1024,
-        time="10:00:00"
+        runtime=10 * 60
     conda:
         "../../../../../envs/main.yaml"
     log:

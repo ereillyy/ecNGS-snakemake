@@ -22,7 +22,7 @@ rule qualimap_sample:
     threads: 1
     resources:
         mem_mb=lambda wc: 50 * 1024 if wc.step in STEPS_NEED_SORT else 20 * 1024,
-        time="12:00:00"
+        runtime=12 * 60
     conda:
         "../../../../../envs/qc.yaml"
     log:
@@ -68,7 +68,7 @@ rule qualimap_mn:
     threads: 1
     resources:
         mem_mb=20 * 1024,
-        time="12:00:00"
+        runtime=720
     conda:
         "../../../../../envs/qc.yaml"
     log:

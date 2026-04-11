@@ -1,4 +1,3 @@
-        snv_vcf="{pipeline}/tmp/1_primary/e_call/default/{sample}_snv.vcf",
 
 
 rule combine_vcfs:
@@ -10,7 +9,7 @@ rule combine_vcfs:
     threads: 16
     resources:
         mem_mb=10,
-        time="24:00:00"
+        runtime=24 * 60
     localrule: True
     conda:
         "../../../../../envs/main.yaml"

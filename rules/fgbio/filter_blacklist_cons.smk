@@ -7,7 +7,7 @@ rule filter_blacklist_cons:
     threads: 3
     resources:
         mem_mb=5 * 1024,
-        time="00:30:00"
+        runtime=30
     conda:
         "../../../../../envs/main.yaml"
     log:

@@ -11,7 +11,7 @@ rule align_umi_tagged:
     threads: 10
     resources:
         mem_mb=50 * 1024,
-        time="06:00:00"
+        runtime=6 * 60
     conda:
         "../../../../../envs/main.yaml"
     log:

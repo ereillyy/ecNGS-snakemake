@@ -10,7 +10,7 @@ rule fastp:
     threads: 4
     resources:
         mem_mb=20 * 1024,
-        time="01:00:00"
+        runtime=60
     conda:
         "../../../../envs/main.yaml"
     log:

@@ -9,7 +9,7 @@ rule mark_dups:
     threads: 4
     resources:
         mem_mb=150 * 1024,
-        time="05:00:00"
+        runtime=5 * 60
     container:
         config["containers"]["gatk"]
     log:
@@ -39,7 +39,7 @@ rule mark_dups_index:
     threads: 4
     resources:
         mem_mb=20 * 1024,
-        time="02:00:00"
+        runtime=120
     conda:
         "../../../../../envs/main.yaml"
     localrule: True

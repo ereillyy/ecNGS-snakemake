@@ -11,7 +11,7 @@ rule extract_umis:
     threads: 3
     resources:
         mem_mb=2 * 1024,
-        time="01:00:00"
+        runtime=60
     conda:
         "../../../../../envs/main.yaml"
     log:

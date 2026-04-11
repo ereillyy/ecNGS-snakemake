@@ -14,7 +14,7 @@ rule call:
     threads: 8
     resources:
         mem_mb=70 * 1024,
-        time="24:00:00"
+        runtime=24 * 60
     conda:
         "../../../../../envs/main.yaml"
     log:

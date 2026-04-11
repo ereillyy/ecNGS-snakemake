@@ -7,7 +7,7 @@ rule group_umi:
     threads: 1
     resources:
         mem_mb=50 * 1024,
-        time="04:00:00"
+        runtime=4 * 60
     conda:
         "../../../../../envs/main.yaml"
     log:

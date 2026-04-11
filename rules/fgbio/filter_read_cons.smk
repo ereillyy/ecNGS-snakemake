@@ -6,7 +6,7 @@ rule filter_read_cons:
     threads: 1
     resources:
         mem_mb=5 * 1024,
-        time="01:00:00"
+        runtime=60
     conda:
         "../../../../../envs/main.yaml"
     log:

@@ -10,7 +10,7 @@ rule call_umi_consensus:
     threads: 3
     resources:
         mem_mb=10 * 1024,
-        time="02:00:00"
+        runtime=120
     conda:
         "../../../../../envs/main.yaml"
     log:

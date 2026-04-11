@@ -11,7 +11,7 @@ rule fastqc:
     threads: 2
     resources:
         mem_mb= 5 * 1024,
-        time="00:30:00"
+        runtime=30
     conda:
         "../../../../envs/qc.yaml"
     log:
