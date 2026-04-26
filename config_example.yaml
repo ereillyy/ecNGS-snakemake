@@ -16,6 +16,10 @@ noisemask: /path/to/noise_mask.bed.gz
 snpmask: /path/to/snp_database.vcf.gz
 chr_sizes: /path/to/chromosome_regions.bed
 
+# Thresholds for variant calling (all combinations will be run)
+snv_thresholds: [0.1, 0.3, 0.5, 1]
+indel_thresholds: [3]
+
 # Import configuration: define data sources and rename samples
 # Structure:
 #   source_name:
