@@ -13,7 +13,9 @@ for source_name, source_info in config["import_sources"].items():
         SAMPLE_SOURCES[new_name] = (source_path, original_name)
         ALL_SAMPLES.append(new_name)
 
-# Get samples and matched normals from config
+# Get thresholds, samples and matched normals from config
+SNV_THRESHOLDS  = config["snv_thresholds"]
+INDEL_THRESHOLDS = config["indel_thresholds"]
 SAMPLES = list(config["samples"].keys())
 MATCHED_NORMALS = config["matched_normals"]
 

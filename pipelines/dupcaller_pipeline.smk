@@ -6,8 +6,9 @@ rule testimport:
 rule all:
     input:
         # Test all three conditions
-        expand("{pipeline}/vcf/default/{sample}.vcf",
-            sample=SAMPLES, pipeline=PIPELINE),
+        expand("{pipeline}/vcf/threshold_{snv}_{indel}/{sample}.vcf",
+            sample=SAMPLES, pipeline=PIPELINE,
+            snv=SNV_THRESHOLDS, indel=INDEL_THRESHOLDS),
         expand("{pipeline}/qc/fastqc/{state}/{sample}_r1_fastqc.html", 
             sample=SAMPLES, state=STATES, pipeline=PIPELINE),
         expand("{pipeline}/qc/fastqc/{state}/{mn}_r1_fastqc.html",
@@ -24,10 +25,11 @@ rule mn:
 
 rule sample:
     input:
-        expand("{pipeline}/vcf/default/{sample}.vcf",
-        sample=SAMPLES, pipeline=PIPELINE),
-        expand("{pipeline}/qc/fastqc/{state}/{sample}_r1_fastqc.html", 
-        sample=SAMPLES, state=STATES, pipeline=PIPELINE),
+        expand("{pipeline}/vcf/threshold_{snv}_{indel}/{sample}.vcf",
+        sample=SAMPLES, pipeline=PIPELINE,
+        snv=SNV_THRESHOLDS, indel=INDEL_THRESHOLDS),
+        #expand("{pipeline}/qc/fastqc/{state}/{sample}_r1_fastqc.html", 
+        #sample=SAMPLES, state=STATES, pipeline=PIPELINE),
 
 # shared rules
 include: "../rules/t2_to_t1.smk"
