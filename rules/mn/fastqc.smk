@@ -10,8 +10,8 @@ rule mn_fastqc:
         state="unfiltered|mn_filtered"
     threads: 2
     resources:
-        mem_mb=5 * 1024,
-        runtime=30
+        mem_mb= 5 * 1024,
+        runtime=5 * 60
     conda:
         "../../../../../envs/qc.yaml"
     log:

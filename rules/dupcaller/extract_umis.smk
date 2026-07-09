@@ -8,7 +8,7 @@ rule extract_umis:
     threads: 4
     resources:
         mem_mb=10 * 1024,
-        runtime=120
+        runtime=8 * 60
     conda:
         "../../../../../envs/main.yaml"
     log:

@@ -9,8 +9,8 @@ rule align:
         bam_bai=temp("{pipeline}/tmp/1_primary/c_aligned/{sample}.bam.bai")
     threads: 10
     resources:
-        mem_mb=50 * 1024,
-        runtime=10 * 60
+        mem_mb=100 * 1024,
+        runtime=40 * 60
     conda:
         "../../../../../envs/main.yaml"
     log:

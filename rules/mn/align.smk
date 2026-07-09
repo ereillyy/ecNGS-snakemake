@@ -10,8 +10,8 @@ rule mn_align:
         sample="|".join(MATCHED_NORMALS)
     threads: 10
     resources:
-        mem_mb=50 * 1024,
-        runtime=10 * 60
+        mem_mb=150 * 1024,
+        runtime=60 * 60
     conda:
         "../../../../../envs/main.yaml"
     log:

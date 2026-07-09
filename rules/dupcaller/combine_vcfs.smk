@@ -6,7 +6,7 @@ rule combine_vcfs:
         indel_vcf="{pipeline}/tmp/1_primary/e_call/default/{sample}_indel.vcf",
     output:
         vcf="{pipeline}/vcf/default/{sample}.vcf"
-    threads: 16
+    threads: 1
     resources:
         mem_mb=10,
         runtime=24 * 60
