@@ -8,9 +8,9 @@ rule mn_align:
         bam_bai=temp("{pipeline}/tmp/2_mn/b_aligned/{sample}.bam.bai")
     wildcard_constraints:
         sample="|".join(MATCHED_NORMALS)
-    threads: 10
+    threads: 10             # check sort -m flag if changing this (memory assigned per core for sort)
     resources:
-        mem_mb=150 * 1024,
+        mem_mb=150 * 1024,  # check sort -m flag if changing this (memory assigned per core for sort)
         runtime=60 * 60
     conda:
         "../../../../../envs/main.yaml"
@@ -27,6 +27,7 @@ rule mn_align:
              | samtools sort \
                 - \
                 -@ {threads} \
+                -m 9G \
                 -o {output.bam} && \
              samtools index \
                 {output.bam} \

@@ -7,9 +7,9 @@ rule align:
     output:
         bam=temp("{pipeline}/tmp/1_primary/c_aligned/{sample}.bam"), 
         bam_bai=temp("{pipeline}/tmp/1_primary/c_aligned/{sample}.bam.bai")
-    threads: 10
+    threads: 10             # check sort -m flag if changing this (memory assigned per core for sort)
     resources:
-        mem_mb=100 * 1024,
+        mem_mb=100 * 1024,  # check sort -m flag if changing this (memory assigned per core for sort)
         runtime=40 * 60
     conda:
         "../../../../../envs/main.yaml"
@@ -27,6 +27,7 @@ rule align:
              | samtools sort \
                 - \
                 -@ {threads} \
+                -m 6G \
                 -o {output.bam} && \
              samtools index \
                 {output.bam} \

@@ -10,7 +10,7 @@ rule mn_remove_dups:
         sample="|".join(MATCHED_NORMALS)
     threads: 4
     resources:
-        mem_mb=16 * 1024,
+        mem_mb=150 * 1024, # change -Xmx if changing this
         runtime=4 * 60
     conda:
         "../../../../../envs/main.yaml"
@@ -19,7 +19,7 @@ rule mn_remove_dups:
     shell:
         r"""
         echo "[$(date)] Starting remove_dups for {wildcards.sample}" > {log}
-        picard MarkDuplicates \
+        picard -Xmx140g MarkDuplicates \
         I={input.bam} \
         O={output.bam} \
         M={output.metrics} \
